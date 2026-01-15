@@ -1,0 +1,37 @@
+# Nombre del Workflow que aparecera en actions
+name: Workflow expression
+run-name: Esta corriendo el workflow expression
+# Controls when the workflow will run
+on: 
+  #trigger
+  workflow_dispatch: #Sirve para que puedas ejecutar un workflow a mano desde la pestaña Actions
+    inputs:
+      nombre:
+        description: 'Nombre de la persona'
+        required: true
+        type: string
+        default: Eduardo
+      gatitos:
+        description: 'Le gustan los gatitos?'
+        required: true
+        type: boolean
+        default: true
+    
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # nombre que recibe el job en este caso 'gatitos'
+  gatitos:
+    if: ${{ inputs.gatitos }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Le gustan los gatitos
+        run: echo A ${{ inputs.nombre }} le gustan los gatitos
+  
+  noGatitos:
+    if: ${{ !inputs.gatitos }}
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Le gustan los gatitos
+        run: echo A ${{ inputs.nombre }} NO le gustan los gatitos
+    
